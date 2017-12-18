@@ -51,5 +51,12 @@ namespace DataStructure.Tests
             var isOrderedDescending = listAfterSorting.SequenceEqual(list.OrderByDescending(x => x));
             Assert.True(isOrderedDescending);
         }
+
+        [Fact]
+        public void Test_MergeSortAscending()
+        {
+            MergeSort.Sort(listAfterSorting);
+            CheckIfListSortedAscending();
+        }
     }
 }
