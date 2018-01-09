@@ -13,56 +13,88 @@ namespace DataStructures.Sorting
             MergeSortAlgo(items, 0, items.Count - 1);
         }
 
+        // 0 5
+        // mid = (0 + 5)/ 2 = 2
+        // 0 2
+        // mid = (0 + 2) / 2 = 1
+        // 0 1
+        // mid = ( 0 + 1)/ 2 = 0
+        // 0 0 ------
+        // 3,5
 
-        private static void MergeSortAlgo(List<int> a,int start,int end)
+        private static void MergeSortAlgo(List<int> items, int start, int end)
         {
-            if (start < end)
+            if(start < end)
             {
-                var mid = (start + end) / 2;
-
-                MergeSortAlgo(a, start, mid);
-                MergeSortAlgo(a, mid + 1, end);
-                Merge(a, start, end, mid);
+                int mid = (start + end) / 2;
+                MergeSortAlgo(items,start, mid);
+                MergeSortAlgo(items, mid + 1, end);
+                Merge(items, start, mid, end);
             }
         }
 
-        private static void Merge(List<int> a, int start, int end, int mid)
+        // 0 1 2 3 4 5
+        // 5 2 4 6 1 3
+
+        private static void Merge(List<int> items, int start, int mid, int end)
         {
-            int[] left = new int[mid - start + 1];
-            int[] right = new int[end - mid];
+            // end index of left array from start.
+            var l = mid - start;
+            // start index of right array from start.
+            var r = l + 1;
 
-            var i = 0;
-            for (int count = start; count <= mid; count++)
+            List<int> left = new List<int>();
+            for (int k = start; k <= start + l; k++)
             {
-                left[i] = a[count];
-                i++;
+                left.Add(items[k]);
             }
 
-            var j = 0;
-            for (int count = mid + 1; count <= end; count++)
+            List<int> right = new List<int>();
+            for (int k = start + r; k <= end; k++)
             {
-                right[j] = a[count];
-                j++;
+                right.Add(items[k]);
             }
 
 
-            // merge left and right.
-            i = 0; j = 0;
-            for (int k = start; k <= end; k++)
-            {
+            int i = 0;
+            int j = 0;
 
-                if (left[i] < right[j])
+            int m = start;
+            for (m = start; m <= end; m++)
+            {
+                if (i >= left.Count || j >= right.Count)
                 {
-                    a[k] = left[i];
-                    i = i + 1;
+                    break;
+                }
+
+                if (left[i] <= right[j])
+                {
+                    items[m] = left[i];
+                    i++;
                 }
                 else
                 {
-                    a[k] = right[j];
-                    j = j + 1;
+                    items[m] = right[j];
+                    j++;
                 }
             }
-            
+           
+
+            for (int count = j; count < right.Count; count++)
+            {
+                items[m] = right[count];
+                m++;
+            }
+
+
+            for (int count = i; count < left.Count; count++)
+            {
+                items[m] = left[count];
+                m++;
+            }
+        
+
+
         }
     }
 }

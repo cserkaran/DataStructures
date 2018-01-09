@@ -14,7 +14,7 @@ namespace DataStructure.Tests
 
         public SortingTests()
         {
-            list = new List<int> { 5,2,4,6,1,3 };
+            list = new List<int> { 5,2,4,6,1,3,1};
             listAfterSorting = list.ToList();
 
         }
